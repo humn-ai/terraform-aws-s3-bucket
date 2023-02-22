@@ -313,6 +313,10 @@ module "s3_user" {
 data "aws_iam_policy_document" "bucket_policy" {
   count = local.enabled ? 1 : 0
 
+  /*  WARN: manual change added */
+  version = "2012-10-17"
+/*  End of manual change */
+
   dynamic "statement" {
     for_each = var.allow_encrypted_uploads_only && var.allow_encrypted_uploads_only ? [1] : []
 
