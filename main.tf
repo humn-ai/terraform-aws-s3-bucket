@@ -71,7 +71,9 @@ resource "aws_s3_bucket_logging" "default" {
 # https://docs.aws.amazon.com/AmazonS3/latest/dev/bucket-encryption.html
 # https://www.terraform.io/docs/providers/aws/r/s3_bucket.html#enable-default-server-side-encryption
 resource "aws_s3_bucket_server_side_encryption_configuration" "default" {
+  /*  WARN: manual change added */
   count  = local.enabled && var.sse_enabled ? 1 : 0
+  /*  End of manual change */
   bucket = join("", aws_s3_bucket.default.*.id)
 
   rule {
@@ -315,10 +317,12 @@ data "aws_iam_policy_document" "bucket_policy" {
 
   /*  WARN: manual change added */
   version = "2012-10-17"
-/*  End of manual change */
+  /*  End of manual change */
 
   dynamic "statement" {
-    for_each = var.allow_encrypted_uploads_only && var.allow_encrypted_uploads_only ? [1] : []
+    /*  WARN: manual change added */
+    for_each = var.sse_enabled && var.allow_encrypted_uploads_only ? [1] : []
+    /*  End of manual change */
 
     content {
       sid       = "DenyIncorrectEncryptionHeader"
