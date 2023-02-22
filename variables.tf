@@ -329,8 +329,10 @@ variable "bucket_key_enabled" {
   EOT
 }
 
+/*  WARN: manual change added */
 variable "sse_enabled" {
   type        = bool
   default     = true
   description = "Enable default server-side encryption. Default set to `true`"
 }
+/*  End of manual change */
